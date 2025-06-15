@@ -1,8 +1,12 @@
+"use client"
 import Image from "next/image";
-import { useRouter } from "next/router";
+
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
+
 import useUser from "../hooks/useUser";
+
 
 interface AvatarProps {
   userId: string;

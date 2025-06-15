@@ -1,4 +1,4 @@
-
+"use client"
 import Avatar from '../Avatar';
 import useUsers from '../../hooks/useUsers';
 
