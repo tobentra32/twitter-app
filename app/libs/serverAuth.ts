@@ -1,9 +1,10 @@
 import { NextRequest } from 'next/server';
+import { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth/next';
 import { authOptions } from '../api/auth/[...nextauth]/route'; // Update the path as needed
 import prisma from '@/app/libs/prismadb'; // Update the path as needed
 
-const serverAuth = async (req: NextRequest) => {
+const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
     const session = await getServerSession(authOptions);
 
     if (!session?.user?.email) {
