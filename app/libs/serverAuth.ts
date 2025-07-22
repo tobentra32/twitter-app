@@ -1,27 +1,26 @@
-import { NextRequest } from 'next/server';
-import { NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../api/auth/[...nextauth]/route'; // Update the path as needed
-import prisma from '@/app/libs/prismadb'; // Update the path as needed
+// app/libs/serverAuth.ts
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import prisma from '@/app/libs/prismadb';
 
-const serverAuth = async (req: NextApiRequest, res: NextApiResponse) => {
-    const session = await getServerSession(authOptions);
+const serverAuth = async () => {
+  const session = await getServerSession(authOptions);
 
-    if (!session?.user?.email) {
-        throw new Error('Not signed in');
-    }
+  if (!session?.user?.email) {
+    throw new Error('Not signed in');
+  }
 
-    const currentUser = await prisma.user.findUnique({
-        where: {
-            email: session.user.email,
-        },
-    });
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      email: session.user.email,
+    },
+  });
 
-    if (!currentUser) {
-        throw new Error('Not signed in');
-    }
+  if (!currentUser) {
+    throw new Error('Not signed in');
+  }
 
-    return { currentUser };
+  return { currentUser };
 };
 
 export default serverAuth;

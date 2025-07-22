@@ -6,6 +6,7 @@ import useUser from "../../hooks/useUser";
 import UserHero from "../../components/users/UserHero";
 import UserBio from "../../components/users/UserBio";
 import Header from "../../components/Header";
+import PostFeed from "@/app/components/posts/PostFeeds";
 
 const UserView = () => {
   // Use useParams to get the userId from the URL
@@ -31,6 +32,7 @@ const UserView = () => {
       <Header showBackArrow label={fetchedUser.name} />
       <UserHero userId={userId as string} />
       <UserBio userId={userId as string} />
+      <PostFeed userId={userId as string} />
     </>
   );
 };

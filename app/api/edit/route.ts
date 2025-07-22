@@ -2,12 +2,13 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../libs/prismadb';
 import serverAuth from '../../libs/serverAuth';
+import { NextApiRequest, NextApiResponse } from "next";
 
-export async function PATCH(req: Request) {
+export async function PATCH(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { currentUser } = await serverAuth(req);
+    const { currentUser } = await serverAuth();
 
-    const body = await req.json();
+    const body = await req.body;
     const { name, username, bio, profileImage, coverImage } = body;
 
     if (!name || !username) {
