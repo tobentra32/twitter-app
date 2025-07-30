@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
+import { BsDot } from "react-icons/bs";
 import useLoginModal from '../../hooks/useLoginModal';
 import useCurrentUser from '../../hooks/useCurrentUser';
 
@@ -12,6 +13,7 @@ interface SidebarItemProps {
     icon: IconType
     onClick?: () => void;
     auth?: boolean;
+    alert?: boolean;
 }
 
 const SidebarItem = ({
@@ -19,7 +21,8 @@ const SidebarItem = ({
     href,
     icon:Icon,
     onClick,
-    auth
+    auth,
+    alert
 }:SidebarItemProps) => {
     
     const router = useRouter();
@@ -61,6 +64,7 @@ const SidebarItem = ({
             ">
 
                 <Icon size={28} color="white" />
+                {alert ? <BsDot className="text-sky-500 absolute -top-4 left-0" size={70} /> : null}
 
 
             </div>
@@ -83,7 +87,8 @@ const SidebarItem = ({
                 <p className="hidden lg:block text-white text-xl">
                     {label}
                 </p>
-            </div>
+                {alert ? <BsDot className="text-sky-500 absolute -top-4 left-0" size={70} /> : null}
+            </div> 
 
         </div>
 
