@@ -1,13 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../../libs/prismadb';
-import serverAuth from '../../../libs/serverAuth';
+import prisma from '@/app/libs/prismadb';
+import serverAuth from '@/app/libs/serverAuth';
 
-export async function POST(req: NextRequest, { params }: { params: { postId: string } }) {
+// ✅ Correct POST signature
+export async function POST(
+  req: NextRequest,
+  context: { params: { postId: string } }
+) {
+  const { postId } = context.params;
+
   try {
     const { body } = await req.json();
     const { currentUser } = await serverAuth();
-
-    const postId = params.postId;
 
     if (!postId || typeof postId !== 'string') {
       return new NextResponse('Invalid ID', { status: 400 });
@@ -21,12 +25,9 @@ export async function POST(req: NextRequest, { params }: { params: { postId: str
       },
     });
 
-    // Send notification to post owner
     try {
       const post = await prisma.post.findUnique({
-        where: {
-          id: postId,
-        },
+        where: { id: postId },
       });
 
       if (post?.userId) {
