@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import prisma from '../../libs/prismadb';
-import serverAuth from '../../libs/serverAuth';
+import prisma from '../../../libs/prismadb';
+import serverAuth from '../../../libs/serverAuth';
 
 export async function POST(req: NextRequest, { params }: { params: { postId: string } }) {
   try {
