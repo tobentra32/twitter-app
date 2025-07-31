@@ -1,14 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-// Removed invalid import
-
 import prisma from '@/app/libs/prismadb';
 import serverAuth from '@/app/libs/serverAuth';
 
+// ✅ USE this signature exactly — context.params typed as Record<string, string>
 export async function POST(
   req: NextRequest,
-  context: { params: { postId: string } }
+  context: { params: Record<string, string> }
 ) {
-  const { postId } = context.params as { postId: string };
+  const { postId } = context.params;
 
   try {
     const { body } = await req.json();
@@ -26,7 +25,6 @@ export async function POST(
       },
     });
 
-    // Optional: Send notification
     try {
       const post = await prisma.post.findUnique({ where: { id: postId } });
 
