@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
+// Removed invalid import
+
 import prisma from '@/app/libs/prismadb';
 import serverAuth from '@/app/libs/serverAuth';
 
-// ✅ Correct POST signature
 export async function POST(
   req: NextRequest,
   context: { params: { postId: string } }
 ) {
-  const { postId } = context.params;
+  const { postId } = context.params as { postId: string };
 
   try {
     const { body } = await req.json();
@@ -25,10 +26,9 @@ export async function POST(
       },
     });
 
+    // Optional: Send notification
     try {
-      const post = await prisma.post.findUnique({
-        where: { id: postId },
-      });
+      const post = await prisma.post.findUnique({ where: { id: postId } });
 
       if (post?.userId) {
         await prisma.notification.create({
