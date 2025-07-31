@@ -1,35 +1,22 @@
+// app/notifications/page.tsx
+
+import { redirect } from "next/navigation";
 import Header from "../components/Header";
 import NotificationsFeed from "../components/NotificationsFeed";
-import useCurrentUser from "../hooks/useCurrentUser";
-import { NextPageContext } from "next";
-import { getSession } from "next-auth/react";
+import serverAuth from "@/app/libs/serverAuth";
 
-export async function getServerSideProps(context: NextPageContext) {
-  const session = await getSession(context);
+export default async function NotificationsPage() {
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: '/',
-        permanent: false,
-      }
-    }
+  try {
+    await serverAuth(); // will throw if not signed in
+  } catch (error) {
+    redirect("/"); // redirect to home if not authenticated
   }
 
-  return {
-    props: {
-      session
-    }
-  }
-}
-
-const Notifications = () => {
-  return ( 
+  return (
     <>
       <Header showBackArrow label="Notifications" />
       <NotificationsFeed />
     </>
-   );
+  );
 }
- 
-export default Notifications;
