@@ -1,14 +1,14 @@
 // app/api/user/update/route.ts
-import { NextResponse } from 'next/server';
+import {NextRequest, NextResponse } from 'next/server';
 import prisma from '../../libs/prismadb';
 import serverAuth from '../../libs/serverAuth';
-import { NextApiRequest, NextApiResponse } from "next";
 
-export async function PATCH(req: NextApiRequest, res: NextApiResponse) {
+
+export async function PATCH(req: NextRequest) {
   try {
     const { currentUser } = await serverAuth();
 
-    const body = await req.body;
+    const body = await req.json();
     const { name, username, bio, profileImage, coverImage } = body;
 
     if (!name || !username) {
@@ -24,8 +24,8 @@ export async function PATCH(req: NextApiRequest, res: NextApiResponse) {
         username,
         bio,
         profileImage,
-        coverImage
-      }
+        coverImage,
+      },
     });
 
     return NextResponse.json(updatedUser);

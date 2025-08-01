@@ -4,11 +4,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../libs/prismadb';
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { postId: string } }
+  request: Request,
+  { params }: { params: Promise<{ postId: string }> }
 ) {
+  // This endpoint fetches a single post by its ID
   try {
-    const { postId } = params;
+    const { postId } = await params;
 
     if (!postId || typeof postId !== 'string') {
       return NextResponse.json({ error: 'Invalid post ID' }, { status: 400 });

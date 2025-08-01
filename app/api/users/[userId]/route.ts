@@ -4,12 +4,14 @@ import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../libs/prismadb"; // use alias if configured, or correct relative path
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
+  // This endpoint fetches a user by their ID
+  // It also returns the count of followers for that user
   try {
     
-    const { userId } =  params;
+    const { userId } = await params;
 
     if (!userId || typeof userId !== "string") {
       return NextResponse.json({ error: "Invalid ID" }, { status: 400 });

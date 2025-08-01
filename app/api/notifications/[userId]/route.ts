@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import prisma from '../../../libs/prismadb';
 
 export async function GET(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     if (!userId || typeof userId !== 'string') {
       return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
@@ -34,11 +34,12 @@ export async function GET(
   }
 }
 export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { userId: string } }
+  request: Request,
+  { params }: { params: Promise<{ userId: string }> }
 ) {
+  // This endpoint clears all notifications for a user
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     if (!userId || typeof userId !== 'string') {
       return NextResponse.json({ error: 'Invalid user ID' }, { status: 400 });
