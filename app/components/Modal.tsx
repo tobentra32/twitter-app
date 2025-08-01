@@ -9,7 +9,7 @@ export interface ModalProps {
     body?: JSX.Element;
     footer?: JSX.Element;
     actionLabel?: string;
-    disabled?: Boolean;
+    disabled?: boolean;
     onClose: () => void;
     onSubmit: () => void;
 }
@@ -141,7 +141,7 @@ const Modal = ({
                         {/* Footer */}
                         <div className="flex flex-col gap-2 p-7">
 
-                            <Button disabled={disabled} label={actionLabel} secondary fullWidth large onClick={handleSubmit}/>
+                            <Button disabled={disabled} label={actionLabel ?? ""} secondary fullWidth large onClick={handleSubmit}/>
 
                             
                             {footer}
