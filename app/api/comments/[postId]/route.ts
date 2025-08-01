@@ -3,14 +3,15 @@ import prisma from '@/app/libs/prismadb';
 import serverAuth from '@/app/libs/serverAuth';
 
 // ✅ USE this signature exactly — context.params typed as Record<string, string>
+
 export async function POST(
-  req: NextRequest,
-  context: { params: Record<string, string> }
+  request: Request,
+  { params }: { params: Promise<{ postId: string }> }
 ) {
-  const { postId } = context.params;
+  const { postId } = await params;
 
   try {
-    const { body } = await req.json();
+    const { body } = await request.json();
     const { currentUser } = await serverAuth();
 
     if (!postId || typeof postId !== 'string') {
