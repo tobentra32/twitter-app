@@ -5,7 +5,7 @@ import Button from "./Button";
 
 export interface ModalProps {
     isOpen?: boolean;
-    title?: String;
+    title?: string;
     body?: JSX.Element;
     footer?: JSX.Element;
     actionLabel?: string;
